@@ -3,7 +3,9 @@ FROM php:7.4.30-fpm-buster
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Install selected extensions and other stuff
-RUN apt-get update && apt-get install -y libpq-dev nginx wget && docker-php-ext-install pdo pdo_pgsql
+RUN apt-get update \
+    && apt-get -y --no-install-recommends install  php7.3-pgsql php7.3-gd php-redis \
+    && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 
