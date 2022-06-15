@@ -4,7 +4,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Install selected extensions and other stuff
 RUN apt-get update \
-    && apt-get -y --no-install-recommends install  php7.3-pgsql php7.3-gd php-redis \
+    && apt-get -y --no-install-recommends install  php7.3-pgsql php7.3-gd php-redis nginx wget \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 COPY docker/nginx.conf /etc/nginx/nginx.conf
