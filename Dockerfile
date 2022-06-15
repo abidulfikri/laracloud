@@ -1,11 +1,9 @@
-FROM php:7.4-fpm-debian
+FROM php:7.4.30-fpm-buster
 
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Install selected extensions and other stuff
-RUN apk add --no-cache nginx wget && apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo pdo_pgsql
-
-RUN mkdir -p /run/nginx
+RUN apt-get update && apt-get install -y libpq-dev nginx wget && docker-php-ext-install pdo pdo_pgsql
 
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 
