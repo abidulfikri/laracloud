@@ -44,10 +44,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Set locales
 RUN locale-gen en_US.UTF-8 en_GB.UTF-8 de_DE.UTF-8 es_ES.UTF-8 es_CO.UTF-8 fr_FR.UTF-8 it_IT.UTF-8 km_KH sv_SE.UTF-8 fi_FI.UTF-8
 
-COPY build/apache.conf /etc/apache2/apache2.conf
+COPY apache.conf /etc/apache2/apache2.conf
 
 # Configure PHP for My Site
-COPY build/my-site.ini /etc/php/$PHP_VERSION/mods-available/
+COPY my-site.ini /etc/php/$PHP_VERSION/mods-available/
 RUN phpenmod my-site
 
 # Configure apache for My Site
@@ -56,11 +56,11 @@ RUN a2enmod headers rewrite expires && \
     a2enconf servername
 
 # Configure vhost for My Site
-COPY build/my-site.conf /etc/apache2/sites-available/
+COPY my-site.conf /etc/apache2/sites-available/
 RUN a2dissite 000-default && \
     a2ensite my-site.conf
 
-COPY core/ /var/www
+COPY . /var/www
 
 RUN chown -R www-data: /var/www
 
